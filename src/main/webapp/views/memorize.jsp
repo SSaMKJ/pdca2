@@ -3,12 +3,28 @@
 <style>
     #spell_target{
         background-color : yellowgreen;
-        font-size:140px;
         text-align: center;
         vertical-align: middle;
-        line-height: 90px;
     }
 
+    #inSpell{
+        background-color : red;
+        font-size:240px;
+        text-align: center;
+        vertical-align: middle;
+        line-height: 360px;
+    }
+    .center {
+        text-align: center;
+        vertical-align: middle;
+    }
+    .preview{
+        font-size:40px;
+        line-height: 40px;
+    }
+    .bottom{
+        bottom:   0;
+    }
 </style>
 <script>
     var memorize = memorize || {};
@@ -43,19 +59,20 @@
     }
 
     memorize.target = (function(){
-        var contentWidow = $('#div_memorize');
         var target = $('#spell_target');
         var inSpell = target.find('#inSpell');
-        var windowHeight = window.innerHeight;
-        var windowWidth = window.innerWidth;
+        var windowSize = common.getWindowSize();
+
         var initWindow = function(){
-            contentWidow.css('margin-top', 0);
-            contentWidow.height(windowHeight*1 - 200);
-            contentWidow.width(windowWidth*1 - 35);
 
-            target.height(windowHeight*1 - 100);
-            target.width(windowWidth*1 - 35);
+            target.height(windowSize.height - 130);
+            target.width(windowSize.width - 35);
+            logs("target.height( == "+target.height())
+            inSpell.height(windowSize.height - 300);
+            var inSpellMarinTop = target.height() - inSpell.height() - 100;
+            logs("inSpell.height() = "+inSpell.height());
 
+            inSpell.css('margin-top', inSpellMarinTop/2);
 
         }
 
@@ -75,7 +92,7 @@
                 inSpell.text('');
                 return;
             }
-
+            $('#currentText').text(obj.en+' : '+obj.ko);
             var en = obj.en;
             var outText = [];
             for(var i = 0;i<en.length;i++){
@@ -105,21 +122,22 @@
 
 
     var logs = function(l){
-        return;
         $('#log').append('<li>'+l+'</li>');
     }
     $(function(){
         memorize.initWindow();
         memorize.bindActions();
         for(var d in memorize.data){
-            logs(JSON.stringify(memorize.data[d]));
+//            logs(JSON.stringify(memorize.data[d]));
         }
     })
 
 </script>
 
-<div id="spell_target" class="target ui-body-d ui-content">
-    <p id="inSpell"></p>
+<div id="spell_target" class="target ui-body-d ui-content" style="">
+    <p id="currentText" class="center preview">-</p>
+    <p id="inSpell" style="background-color:red;"></p>
 </div>
 
-<button id="btn_start" class="ui-btn">시작</button>
+<button id="btn_start" class="ui-btn bottom">시작</button>
+<ul id="log"></ul>
