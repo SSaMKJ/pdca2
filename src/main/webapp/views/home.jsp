@@ -75,6 +75,8 @@
         home.clickeNavi = function (evt) {
 //            alert('hello world2');
             try {
+
+                memorize.target.clear();
                 AndroidBridge && AndroidBridge.showToast('test');
             } catch (e) {
             }

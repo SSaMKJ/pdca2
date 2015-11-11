@@ -8,7 +8,6 @@
     }
 
     #inSpell{
-        background-color : red;
         font-size:240px;
         text-align: center;
         vertical-align: middle;
@@ -61,18 +60,22 @@
     memorize.target = (function(){
         var target = $('#spell_target');
         var inSpell = target.find('#inSpell');
+        var innerBox = target.find('#innerBox');
+        var innerInnerBox = target.find('#innerInnerBox');
         var windowSize = common.getWindowSize();
 
         var initWindow = function(){
 
             target.height(windowSize.height - 130);
             target.width(windowSize.width - 35);
-            logs("target.height( == "+target.height())
-            inSpell.height(windowSize.height - 300);
-            var inSpellMarinTop = target.height() - inSpell.height() - 100;
-            logs("inSpell.height() = "+inSpell.height());
+            inSpell.css('margin-top', 0).css('margin-bottom', 0);
+            var t_height = target.height();
+            var t_width = target.width();
 
-            inSpell.css('margin-top', inSpellMarinTop/2);
+            innerBox.css('height', t_height - 160).css('width', t_width-60).css('border-radius', 30).css('background-color', 'blue').css('margin', 30);
+            innerInnerBox.css('height', t_height - 220).css('width', t_width-110).css('border-radius', 30).css('margin', 30).css('background-color', 'yellow');
+
+            innerBox.height(windowSize.height - 300);
 
         }
 
@@ -83,7 +86,7 @@
 
             stringQueue.push(obj)
         }
-
+        var timer = undefined;
         var start = function(){
             memorize.hideBtnStart();
             var obj = stringQueue.shift();
@@ -100,23 +103,40 @@
             }
             outText.push({text:en, locale:'US'});
             outText.push({text:obj.ko, locale:'KO'});
-            var timer = window.setInterval(function(){
+
+            var showNext = function(){
+
                 var out = outText.shift();
                 if(out == null){
                     clearInterval(timer);
                     start();
                 }
-                inSpell.text(out.text);
                 try{
+                    inSpell.html(out.text);
                     AndroidBridge && AndroidBridge.convertTextToSpeech(out.text, out.locale);
                 }catch(e){}
 
+            }
+
+            showNext();
+
+            timer = window.setInterval(function(){
+                showNext();
             }, 2000);
+
+        }
+
+
+        var clear = function(){
+            try{
+                clearInterval(timer);
+            }catch(e){}
         }
         return {
             initWindow : initWindow,
             addData : addData,
-            start : start
+            start : start,
+            clear : clear
         }
     }());
 
@@ -134,9 +154,15 @@
 
 </script>
 
-<div id="spell_target" class="target ui-body-d ui-content" style="">
+<div id="spell_target" class="target ui-body-d ui-content" style="position:relative;">
     <p id="currentText" class="center preview">-</p>
-    <p id="inSpell" style="background-color:red;"></p>
+    <div id="innerBox" style="position:absolute; background-color: #00a0df;">
+        <div id="innerInnerBox" style="position: absolute ; background-color: tomato;margin:20px;">
+            <p id="inSpell" style=""></p>
+        </div>
+    </div>
+
+
 </div>
 
 <button id="btn_start" class="ui-btn bottom">시작</button>
