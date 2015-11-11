@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="pdca.enko.mapper.EnKoMapper" >
+
+  <select id="getAll" resultType="pdca.enko.model.EnKoVo">
+    select m.MYID,  en.WORD en, ko.WORD ko from en_ko_mapper m, english en, korean ko
+    where m.en_id = en.MYID
+    and m.KO_ID = ko.myid
+    order by m.myid
+    limit 10
+  </select>
+
+</mapper>
