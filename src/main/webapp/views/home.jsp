@@ -75,7 +75,8 @@
         home.clickeNavi = function (evt) {
 //            alert('hello world2');
             try {
-
+                alert(evt.target.id);
+                debugger;
                 memorize.target.clear();
                 AndroidBridge && AndroidBridge.showToast('test');
             } catch (e) {
