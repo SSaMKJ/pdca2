@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="../resources/themes/defaultTheme.min.css">
     <link rel="stylesheet" href="../resources/themes/jquery.mobile.icons.min.css">
     <script src="../resources/jquery/jquery.js"></script>
+    <script src="../resources/pez/pez.common.js"></script>
+    <script src="../resources/pez/pez.utils.js"></script>
     <script src="../resources/jquery/jquery.mobile-1.4.5.min.js"></script>
 
     <!--
@@ -63,7 +65,7 @@
 //            height = parseInt(height);
 //            $("#div_page1").css('height', height+'px');
 
-            $('#one').load('enko/memorize.do', function(){
+            $('#one').load('enko/memorize.htm', function(){
 //                alert('loadComplete');
             })
         }
@@ -75,8 +77,16 @@
         home.clickeNavi = function (evt) {
 //            alert('hello world2');
             try {
-                alert(evt.target.id);
-                debugger;
+                switch(evt.target.id){
+                    case 'tab1': break;
+                    case 'tab2' :
+                        Ajax('quiz/data.json',{'userId':'me'}, function(data){
+                            console.log(JSON.stringify(data));
+                        });
+
+                        break;
+                }
+
                 memorize.target.clear();
                 AndroidBridge && AndroidBridge.showToast('test');
             } catch (e) {
@@ -102,8 +112,8 @@
         <div data-role="tabs" id="tabs">
             <div data-role="navbar">
                 <ul>
-                    <li><a href="enko/memorize.do" data-ajax="false" class="ui-btn-active" >외우기</a></li>
-                    <li><a href="#two" data-ajax="false"  >테스트</a></li>
+                    <li><a id="tab1" href="enko/memorize.htm" data-ajax="false" class="ui-btn-active" >외우기</a></li>
+                    <li><a id="tab2" href="#two" data-ajax="false"  >테스트</a></li>
                 </ul>
             </div>
             <div id="two" class="ui-body-d ui-content">

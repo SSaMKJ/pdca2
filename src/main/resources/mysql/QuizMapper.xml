@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="pdca.quiz.mapper.QuizMapper" >
+
+  <select id="getAll" resultType="pdca.quiz.model.QuizVo">
+SELECT
+    @RNUM:=@RNUM + 1 AS seq,
+    en.myid as en_myid,
+    en.word as en_word,
+    ko.myid as ko_myid,
+    ko.word as ko_word
+FROM
+    english en,
+    korean ko,
+    en_ko_mapper mapper,
+    (SELECT @RNUM:=0) R
+where
+    mapper.en_id = en.myid
+        and mapper.ko_id = ko.myid
+limit 20
+  </select>
+
+</mapper>
