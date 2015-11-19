@@ -21,19 +21,32 @@ public class QuizController {
     @Autowired
     QuizService quizService;
 
-    @RequestMapping(value="/data", method = RequestMethod.POST)
+    @RequestMapping(value = "/data", method = RequestMethod.POST)
     public ModelAndView getList2(ModelAndView model) {
         ModelAndView mav = new ModelAndView();
-        List<QuizVo> enKoVoList = quizService.getAll();
+        List<QuizVo> quizDatas = quizService.getAll();
 
 
-        mav.addObject("list", enKoVoList);
+        mav.addObject("list", quizDatas);
         mav.setViewName("jsonView");
+
+        StringBuilder sb = new StringBuilder("List<QuizVo> quizDatas = new ArrayList<>();\nQuizVo quizVo = null");
+        for (QuizVo quizVo : quizDatas) {
+sb.append("quizVo = new QuizVo();\n");
+            sb.append("            quizVo.setSeq(").append(quizVo.getSeq()).append("l);\n");
+            sb.append("            quizVo.setEn_myid(").append(quizVo.getEn_myid()).append("l);\n");
+            sb.append("            quizVo.setKo_myid(").append(quizVo.getKo_myid()).append("l);\n");
+            sb.append("            quizVo.setEn_word(\"").append(quizVo.getEn_word()).append("\");\n");
+            sb.append("            quizVo.setKo_word(\"").append(quizVo.getKo_word()).append("\");\nquizDatas.add(quizVo);\n");
+        }
+
+        System.out.println(sb.toString());
+
         return mav;
     }
 
 
-    @RequestMapping(value="/test")
+    @RequestMapping(value = "/test")
 //    @RequestMapping(value="/test", method = RequestMethod.GET)
     public ModelAndView test(ModelAndView model) {
         System.out.println("==================");
