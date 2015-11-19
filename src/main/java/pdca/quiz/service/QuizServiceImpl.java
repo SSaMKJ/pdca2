@@ -3,7 +3,7 @@ package pdca.quiz.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pdca.quiz.mapper.QuizMapper;
-import pdca.quiz.model.QuizVo;
+import pdca.quiz.model.EnKoDataMap;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public class QuizServiceImpl implements QuizService {
     private QuizMapper quizMapper;
 
     @Override
-    public List<QuizVo> getAll() {
+    public List<EnKoDataMap> getAll() {
         return quizMapper.getAll();
     }
 }

@@ -1,6 +1,6 @@
 package pdca.quiz.mapper;
 
-import pdca.quiz.model.QuizVo;
+import pdca.quiz.model.EnKoDataMap;
 
 import java.util.List;
 
@@ -8,5 +8,5 @@ import java.util.List;
  * Created by kimjinsam on 2015. 11. 7..
  */
 public interface QuizMapper {
-    public List<QuizVo> getAll();
+    public List<EnKoDataMap> getAll();
 }

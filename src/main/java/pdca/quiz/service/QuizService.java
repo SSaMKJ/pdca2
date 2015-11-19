@@ -1,6 +1,6 @@
 package pdca.quiz.service;
 
-import pdca.quiz.model.QuizVo;
+import pdca.quiz.model.EnKoDataMap;
 
 import java.util.List;
 
@@ -9,5 +9,5 @@ import java.util.List;
  */
 public interface QuizService {
 
-    public List<QuizVo> getAll();
+    public List<EnKoDataMap> getAll();
 }

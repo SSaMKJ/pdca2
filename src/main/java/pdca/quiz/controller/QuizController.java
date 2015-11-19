@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import pdca.quiz.model.QuizVo;
+import pdca.quiz.model.EnKoDataMap;
 import pdca.quiz.service.QuizService;
 
 import java.util.List;
@@ -24,20 +24,20 @@ public class QuizController {
     @RequestMapping(value = "/data", method = RequestMethod.POST)
     public ModelAndView getList2(ModelAndView model) {
         ModelAndView mav = new ModelAndView();
-        List<QuizVo> quizDatas = quizService.getAll();
+        List<EnKoDataMap> quizDatas = quizService.getAll();
 
 
         mav.addObject("list", quizDatas);
         mav.setViewName("jsonView");
 
         StringBuilder sb = new StringBuilder("List<QuizVo> quizDatas = new ArrayList<>();\nQuizVo quizVo = null");
-        for (QuizVo quizVo : quizDatas) {
+        for (EnKoDataMap enKoDataMap : quizDatas) {
 sb.append("quizVo = new QuizVo();\n");
-            sb.append("            quizVo.setSeq(").append(quizVo.getSeq()).append("l);\n");
-            sb.append("            quizVo.setEn_myid(").append(quizVo.getEn_myid()).append("l);\n");
-            sb.append("            quizVo.setKo_myid(").append(quizVo.getKo_myid()).append("l);\n");
-            sb.append("            quizVo.setEn_word(\"").append(quizVo.getEn_word()).append("\");\n");
-            sb.append("            quizVo.setKo_word(\"").append(quizVo.getKo_word()).append("\");\nquizDatas.add(quizVo);\n");
+            sb.append("            quizVo.setSeq(").append(enKoDataMap.getSeq()).append("l);\n");
+            sb.append("            quizVo.setEn_myid(").append(enKoDataMap.getEn_myid()).append("l);\n");
+            sb.append("            quizVo.setKo_myid(").append(enKoDataMap.getKo_myid()).append("l);\n");
+            sb.append("            quizVo.setEn_word(\"").append(enKoDataMap.getEn_word()).append("\");\n");
+            sb.append("            quizVo.setKo_word(\"").append(enKoDataMap.getKo_word()).append("\");\nquizDatas.add(quizVo);\n");
         }
 
         System.out.println(sb.toString());

@@ -6,7 +6,7 @@ import org.apache.ibatis.type.Alias;
  * Created by kimjinsam on 2015. 11. 7..
  */
 @Alias("QuizVo")
-public class QuizVo {
+public class EnKoDataMap {
 
     private Long seq;
     private Long en_myid;
