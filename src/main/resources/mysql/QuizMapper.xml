@@ -5,7 +5,7 @@
   <select id="getAll" resultType="pdca.quiz.model.EnKoDataMap">
 SELECT
     @RNUM:=@RNUM + 1 AS seq,
-    en.myid as en_myid,
+    mapper.myid as en_myid,
     en.word as en_word,
     ko.myid as ko_myid,
     ko.word as ko_word
@@ -19,5 +19,21 @@ where
         and mapper.ko_id = ko.myid
 limit 20
   </select>
+
+
+    <select id="getAnswerFromDB" parameterType="String" resultType="pdca.quiz.model.CheckAnswerFromDBVo">
+
+        SELECT
+        map.myid AS mapMyid, map.ko_id AS koMyid, en.word AS enWord
+        FROM
+        en_ko_mapper map,
+        korean ko,
+        english en
+        WHERE
+        map.myid IN (${value})
+        AND en.myid = map.en_id
+        AND ko.myid = map.ko_id;
+
+    </select>
 
 </mapper>

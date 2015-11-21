@@ -1,5 +1,6 @@
 package pdca.quiz.mapper;
 
+import pdca.quiz.model.CheckAnswerFromDBVo;
 import pdca.quiz.model.EnKoDataMap;
 
 import java.util.List;
@@ -9,4 +10,6 @@ import java.util.List;
  */
 public interface QuizMapper {
     public List<EnKoDataMap> getAll();
+
+    public List<CheckAnswerFromDBVo> getAnswerFromDB(String ids);
 }

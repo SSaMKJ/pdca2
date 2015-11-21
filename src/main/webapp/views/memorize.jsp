@@ -144,7 +144,7 @@
     var logs = function(l){
         $('#log').append('<li>'+l+'</li>');
     }
-    $(function(){
+    $( document ).ready(function(){
         memorize.initWindow();
         memorize.bindActions();
         for(var d in memorize.data){

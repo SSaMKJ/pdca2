@@ -80,26 +80,23 @@
                 switch(evt.target.id){
                     case 'tab1': break;
                     case 'tab2' :
-                        Ajax('quiz/data.json',{'userId':'me'}, function(data){
-                            console.log(JSON.stringify(data));
-                        });
-
                         break;
                 }
 
                 memorize.target.clear();
-                AndroidBridge && AndroidBridge.showToast('test');
+//                AndroidBridge && AndroidBridge.showToast('test');
             } catch (e) {
             }
 
         }
 
-        $(function () {
+        $( document ).ready(function () {
 
             home.bindActions();
             home.initLayout();
 
         });
+
     </script>
 
 
@@ -113,11 +110,8 @@
             <div data-role="navbar">
                 <ul>
                     <li><a id="tab1" href="enko/memorize.htm" data-ajax="false" class="ui-btn-active" >외우기</a></li>
-                    <li><a id="tab2" href="#two" data-ajax="false"  >테스트</a></li>
+                    <li><a id="tab2" href="quiz/quiz.htm" data-ajax="false"  >테스트</a></li>
                 </ul>
-            </div>
-            <div id="two" class="ui-body-d ui-content">
-                <h1>First tab contents</h1>
             </div>
         </div>
     </div>
