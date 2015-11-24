@@ -6,13 +6,6 @@
         text-align: center;
         vertical-align: middle;
     }
-
-    #inSpell{
-        font-size:240px;
-        text-align: center;
-        vertical-align: middle;
-        line-height: 360px;
-    }
     .center {
         text-align: center;
         vertical-align: middle;
@@ -24,6 +17,8 @@
     .bottom{
         bottom:   0;
     }
+    .box_parent{width:90%; height:500px; background:blue; display:table; padding:20px; box-sizing:border-box; border-radius:50px; text-align:center}
+    .box_child{background:yellow; margin:20px; display:table-cell; vertical-align:middle;  border-radius:30px; font-size:240px}
 </style>
 <script>
     var memorize = memorize || {};
@@ -61,19 +56,13 @@
         var target = $('#spell_target');
         var inSpell = target.find('#inSpell');
         var innerBox = target.find('#innerBox');
-        var innerInnerBox = target.find('#innerInnerBox');
         var windowSize = common.getWindowSize();
 
         var initWindow = function(){
-
             target.height(windowSize.height - 130);
             target.width(windowSize.width - 35);
-            inSpell.css('margin-top', 0).css('margin-bottom', 0);
             var t_height = target.height();
             var t_width = target.width();
-
-            innerBox.css('height', t_height - 160).css('width', t_width-60).css('border-radius', 30).css('background-color', 'blue').css('margin', 30);
-            innerInnerBox.css('height', t_height - 220).css('width', t_width-110).css('border-radius', 30).css('margin', 30).css('background-color', 'yellow');
 
             innerBox.height(windowSize.height - 300);
 
@@ -156,9 +145,9 @@
 
 <div id="spell_target" class="target ui-body-d ui-content" style="position:relative;">
     <p id="currentText" class="center preview">-</p>
-    <div id="innerBox" style="position:absolute; background-color: #00a0df;">
-        <div id="innerInnerBox" style="position: absolute ; background-color: tomato;margin:20px;">
-            <p id="inSpell" style=""></p>
+    <div id="innerBox" class="box_parent" style="position:absolute; background-color: #00a0df;">
+        <div id="inSpell"  class="box_child" style="">
+            <%--<p id="inSpell" style=""></p>--%>
         </div>
     </div>
 
