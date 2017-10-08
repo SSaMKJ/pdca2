@@ -6,15 +6,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import pdca.quiz.model.CheckAnswerFromDBVo;
 import pdca.quiz.model.EnKoDataMap;
 import pdca.quiz.service.QuizService;
+import pdca.quiz.util.CheckAnswers;
 import pdca.quiz.util.QuizUtil;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by SSaMKJ on 2015-11-18.
@@ -52,7 +50,7 @@ public class QuizController {
         QuizUtil util = new QuizUtil();
         util.setQuizDatas(quizDatas);
 
-        mav.addObject("list", util.getData(limit));
+        mav.addObject("list", util.getQuizList(limit));
         mav.setViewName("jsonView");
 
         return mav;
@@ -62,37 +60,18 @@ public class QuizController {
     @RequestMapping(value = "/answers", method = RequestMethod.POST)
     public ModelAndView checkAnswers(ModelAndView model, @RequestParam("userId") String userId,  @RequestParam("answers") String answers) {
 
-        String[] answer = answers.split("&");
-
-        Map<Long, Long> answerMap = new HashMap<Long, Long>();
-
-        StringBuffer mapIds = new StringBuffer();
-        for (String ans : answer) {
-            if(mapIds.length()>0) mapIds.append(",");
-            mapIds.append(Long.parseLong(ans.split("=")[0].replace("left_", "")));
-            answerMap.put(Long.parseLong(ans.split("=")[0].replace("left_", "")), Long.parseLong(ans.split("=")[1]));
-
-        }
-        System.out.println(mapIds.toString());
-        List<CheckAnswerFromDBVo> checkAnswerFromDBVos = quizService.getAnswerFromDB(mapIds.toString());
-
         ModelAndView mav = new ModelAndView();
+        mav.setViewName("jsonView");
 
+        String[] answerArr = answers.split("&");
 
-        StringBuffer wrongAnswers = new StringBuffer();
-        int correct = 0;
-        for (CheckAnswerFromDBVo dbAndswer : checkAnswerFromDBVos) {
-            if(answerMap.get(dbAndswer.getMapMyid()) == dbAndswer.getKoMyid()){
-                correct++;
-            }else{
-                if(wrongAnswers.length()>0) wrongAnswers.append("\n");
-                wrongAnswers.append(dbAndswer.getEnWord());
-            }
-        }
+        CheckAnswers checkAnswers = new CheckAnswers(answerArr, quizService);
+
+        int correct = checkAnswers.getCorrectNumber();
+        String wrongWords = checkAnswers.getWrongWords();
 
         mav.addObject("correct", correct);
-        mav.addObject("wrongWords", wrongAnswers.toString());
-        mav.setViewName("jsonView");
+        mav.addObject("wrongWords", wrongWords);
 
 
         return mav;
@@ -111,4 +90,5 @@ public class QuizController {
 
         return null;
     }
+
 }

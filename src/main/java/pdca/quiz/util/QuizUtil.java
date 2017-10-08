@@ -23,55 +23,75 @@ public class QuizUtil {
         }
     }
 
-    public List<EnKoQuizVo> getData(int limit) {
+    public List<EnKoQuizVo> getQuizList(int limit) {
         this.limit = limit;
-        List<EnKoQuizVo> retData = new ArrayList<EnKoQuizVo>();
+        List<EnKoQuizVo> quizList = new ArrayList<EnKoQuizVo>();
 
         for (int i = 0; i < limit; i++) {
-            EnKoDataMap quizData = quizDatas.get(i);
-            EnKoQuizVo enKoQuizVo = new EnKoQuizVo();
-            List<QuizWordVo> rightList = getRightDatas(quizData);
-            QuizWordVo left = getLeftData(quizData);
-            enKoQuizVo.setLeftVo(left);
-            enKoQuizVo.setRightVoList(rightList);
-            retData.add(enKoQuizVo);
-
+            EnKoQuizVo enKoQuizVo = makeEnKoQuizVo(quizDatas.get(i));
+            quizList.add(enKoQuizVo);
         }
 
-        return retData;
+        return quizList;
     }
 
-    private List<QuizWordVo> getRightDatas(EnKoDataMap quizData) {
-        List<QuizWordVo> rightList;
-        rightList = new ArrayList<QuizWordVo>();
-        QuizWordVo right = new QuizWordVo();
-        right.setWord(quizData.getKo_word());
-        right.setMyid(quizData.getKo_myid());
-        rightList.add(right);
+    private EnKoQuizVo makeEnKoQuizVo(EnKoDataMap quizData)
+    {
+        EnKoQuizVo enKoQuizVo = new EnKoQuizVo();
 
+        QuizWordVo left = newEnQuizWord(quizData);
+        List<QuizWordVo> rightList = getRightDatas(quizData);
+
+        enKoQuizVo.setLeftVo(left);
+        enKoQuizVo.setRightVoList(rightList);
+
+        return enKoQuizVo;
+    }
+
+    /**
+     *
+     * @param quizData
+     * @return
+     */
+    private List<QuizWordVo> getRightDatas(EnKoDataMap quizData) {
         shuffleArray(indexArr);
 
+        List<QuizWordVo> rightList = new ArrayList<QuizWordVo>();
+
+        rightList.add(newKoQuizWord(quizData));
+        rightList.addAll(addRightDatas(quizData));
+
+        return rightList;
+    }
+
+    private List<QuizWordVo> addRightDatas(EnKoDataMap quizData)
+    {
+        List<QuizWordVo> rightList = new ArrayList<QuizWordVo>();
         for (int i = 0; rightList.size() < limit; i++) {
-            EnKoDataMap map = quizDatas.get(indexArr[i]);
-            if (quizData.getKo_myid() == map.getKo_myid()) {
+            EnKoDataMap koDataMap = quizDatas.get(indexArr[i]);
+            if (quizData.getKo_myid().longValue() == koDataMap.getKo_myid().longValue()) {
                 continue;
             }
 
-            right = new QuizWordVo();
-            right.setWord(map.getKo_word());
-            right.setMyid(map.getKo_myid());
-            rightList.add(right);
+            rightList.add(newKoQuizWord(koDataMap));
         }
 
         return rightList;
     }
 
-    private QuizWordVo getLeftData(EnKoDataMap quizData) {
-        QuizWordVo left;
-        left = new QuizWordVo();
-        left.setMyid(quizData.getEn_myid());
-        left.setWord(quizData.getEn_word());
-        return left;
+    private QuizWordVo newKoQuizWord(EnKoDataMap dataMap)
+    {
+        QuizWordVo koQuizWord = new QuizWordVo();
+        koQuizWord.setWord(dataMap.getKo_word());
+        koQuizWord.setMyid(dataMap.getKo_myid());
+        return koQuizWord;
+    }
+
+    private QuizWordVo newEnQuizWord(EnKoDataMap dataMap) {
+        QuizWordVo enQuizWord = new QuizWordVo();
+        enQuizWord.setMyid(dataMap.getEn_myid());
+        enQuizWord.setWord(dataMap.getEn_word());
+        return enQuizWord;
     }
 
     private void shuffleArray(int[] ar) {
