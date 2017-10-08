@@ -60,7 +60,8 @@ public class MakeQuizData
 
         List<QuizWordVo> rightList = new ArrayList<QuizWordVo>();
 
-        rightList.add(newKoQuizWord(quizData));
+        QuizWordVo firstKoQuizWord = newKoQuizWord(quizData);
+        rightList.add(firstKoQuizWord);
         rightList.addAll(addRightDatas(quizData));
 
         return rightList;
