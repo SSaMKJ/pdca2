@@ -1,6 +1,6 @@
-package pdca.enko.service;
+package pdca.services;
 
-import pdca.enko.model.EnKoVo;
+import pdca.models.EnKoVo;
 
 import java.util.List;
 

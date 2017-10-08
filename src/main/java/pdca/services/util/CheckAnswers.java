@@ -1,8 +1,7 @@
-package pdca.quiz.util;
+package pdca.services.util;
 
 import org.apache.commons.lang3.StringUtils;
-import pdca.quiz.model.CheckAnswerFromDBVo;
-import pdca.quiz.service.QuizService;
+import pdca.models.CheckAnswerFromDBVo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,12 +13,12 @@ public class CheckAnswers
     private String[] answerArr;
     private int correct = 0;
     private String wrongWords;
-    private QuizService quizService;
+    private List<CheckAnswerFromDBVo> checkAnswerFromDBVos;
 
-    public CheckAnswers(String[] answerArr, QuizService quizService)
+    public CheckAnswers(String[] answerArr, List<CheckAnswerFromDBVo> checkAnswerFromDBVos)
     {
         this.answerArr = answerArr;
-        this.quizService = quizService;
+        this.checkAnswerFromDBVos = checkAnswerFromDBVos;
 
         checkAnswers();
     }
@@ -37,11 +36,7 @@ public class CheckAnswers
 
     private void checkAnswers()
     {
-        String answerIds = extractAnswerIds(answerArr);
-
         Map<Long, Long> answerMap = getAnswerMap(answerArr);
-
-        List<CheckAnswerFromDBVo> checkAnswerFromDBVos = quizService.getAnswerFromDB(answerIds);
 
         compareUserAnswersAndDBValues(answerMap, checkAnswerFromDBVos);
     }
@@ -65,15 +60,6 @@ public class CheckAnswers
         wrongWords = StringUtils.join(wrongAnswerList, "\n");
     }
 
-    private String extractAnswerIds(String[] answerArr)
-    {
-        List<Long> mapIdList = new ArrayList<Long>();
-        for (String ans : answerArr)
-        {
-            mapIdList.add(Long.parseLong(ans.split("=")[0].replace("left_", "")));
-        }
-        return StringUtils.join(mapIdList, ",");
-    }
 
     private Map<Long, Long> getAnswerMap(String[] answerArr)
     {

@@ -1,4 +1,4 @@
-package pdca.quiz.model;
+package pdca.models;
 
 import org.apache.ibatis.type.Alias;
 

@@ -1,4 +1,4 @@
-package pdca.quiz.model;
+package pdca.models;
 
 /**
  * Created by SSaMKJ on 2015-11-20.

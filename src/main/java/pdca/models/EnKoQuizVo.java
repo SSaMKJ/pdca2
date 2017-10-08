@@ -1,4 +1,4 @@
-package pdca.quiz.model;
+package pdca.models;
 
 import java.util.Collections;
 import java.util.List;

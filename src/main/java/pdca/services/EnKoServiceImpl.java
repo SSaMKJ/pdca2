@@ -1,9 +1,9 @@
-package pdca.enko.service;
+package pdca.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pdca.enko.mapper.EnKoMapper;
-import pdca.enko.model.EnKoVo;
+import pdca.mappers.EnKoMapper;
+import pdca.models.EnKoVo;
 
 import java.util.List;
 

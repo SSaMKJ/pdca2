@@ -1,7 +1,7 @@
-package pdca.quiz.mapper;
+package pdca.mappers;
 
-import pdca.quiz.model.CheckAnswerFromDBVo;
-import pdca.quiz.model.EnKoDataMap;
+import pdca.models.CheckAnswerFromDBVo;
+import pdca.models.EnKoDataMap;
 
 import java.util.List;
 

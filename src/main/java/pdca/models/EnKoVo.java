@@ -1,4 +1,4 @@
-package pdca.enko.model;
+package pdca.models;
 
 import org.apache.ibatis.type.Alias;
 

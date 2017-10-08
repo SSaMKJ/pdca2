@@ -1,6 +1,6 @@
-package pdca.enko.mapper;
+package pdca.mappers;
 
-import pdca.enko.model.EnKoVo;
+import pdca.models.EnKoVo;
 
 import java.util.List;
 

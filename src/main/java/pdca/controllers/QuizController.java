@@ -1,4 +1,4 @@
-package pdca.quiz.controller;
+package pdca.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -6,10 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import pdca.quiz.model.EnKoDataMap;
-import pdca.quiz.service.QuizService;
-import pdca.quiz.util.CheckAnswers;
-import pdca.quiz.util.QuizUtil;
+import pdca.models.EnKoQuizVo;
+import pdca.services.QuizService;
+import pdca.services.util.CheckAnswers;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -22,6 +21,7 @@ import java.util.List;
 @RequestMapping("/quiz")
 public class QuizController {
 
+    private final static int DATA_LIMIT = 10;
 
     private QuizService quizService;
 
@@ -44,13 +44,8 @@ public class QuizController {
     @RequestMapping(value = "/data", method = RequestMethod.POST)
     public ModelAndView getList(ModelAndView model) {
         ModelAndView mav = new ModelAndView();
-        int limit = 10;
-        List<EnKoDataMap> quizDatas = quizService.getAll();
-
-        QuizUtil util = new QuizUtil();
-        util.setQuizDatas(quizDatas);
-
-        mav.addObject("list", util.getQuizList(limit));
+        final List<EnKoQuizVo> quizList = quizService.getQuizList(DATA_LIMIT);
+        mav.addObject("list", quizList);
         mav.setViewName("jsonView");
 
         return mav;
@@ -65,13 +60,10 @@ public class QuizController {
 
         String[] answerArr = answers.split("&");
 
-        CheckAnswers checkAnswers = new CheckAnswers(answerArr, quizService);
+        CheckAnswers checkAnswers = quizService.getCheckAnswers(answerArr);
 
-        int correct = checkAnswers.getCorrectNumber();
-        String wrongWords = checkAnswers.getWrongWords();
-
-        mav.addObject("correct", correct);
-        mav.addObject("wrongWords", wrongWords);
+        mav.addObject("correct", checkAnswers.getCorrectNumber());
+        mav.addObject("wrongWords", checkAnswers.getWrongWords());
 
 
         return mav;

@@ -1,8 +1,8 @@
-package pdca.quiz.util;
+package pdca.services.util;
 
-import pdca.quiz.model.EnKoDataMap;
-import pdca.quiz.model.EnKoQuizVo;
-import pdca.quiz.model.QuizWordVo;
+import pdca.models.EnKoDataMap;
+import pdca.models.EnKoQuizVo;
+import pdca.models.QuizWordVo;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
