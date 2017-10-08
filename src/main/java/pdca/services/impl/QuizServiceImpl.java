@@ -1,4 +1,4 @@
-package pdca.services;
+package pdca.services.impl;
 
 import pdca.mappers.QuizMapper;
 import org.apache.commons.lang3.StringUtils;
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import pdca.models.CheckAnswerFromDBVo;
 import pdca.models.EnKoDataMap;
 import pdca.models.EnKoQuizVo;
+import pdca.services.QuizService;
 import pdca.services.util.CheckAnswers;
 import pdca.services.util.QuizUtil;
 
@@ -18,7 +19,8 @@ import java.util.List;
  */
 
 @Service("quizService")
-public class QuizServiceImpl implements QuizService {
+public class QuizServiceImpl implements QuizService
+{
 
     @Autowired
     private QuizMapper quizMapper;

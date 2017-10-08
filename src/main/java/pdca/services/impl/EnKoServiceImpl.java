@@ -1,9 +1,10 @@
-package pdca.services;
+package pdca.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pdca.mappers.EnKoMapper;
 import pdca.models.EnKoVo;
+import pdca.services.EnKoService;
 
 import java.util.List;
 
@@ -12,7 +13,8 @@ import java.util.List;
  */
 
 @Service("enkoService")
-public class EnKoServiceImpl implements EnKoService {
+public class EnKoServiceImpl implements EnKoService
+{
 
     @Autowired
     private EnKoMapper enKoMapper;
