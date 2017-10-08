@@ -19,7 +19,7 @@ define([
 
         },
 
-        // Renders all of the Category models on the UI
+        // Renders all of the Category pdca.models on the UI
         render: function() {
 
             // Sets the view's template property

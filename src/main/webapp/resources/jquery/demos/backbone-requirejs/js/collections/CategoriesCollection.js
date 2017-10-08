@@ -77,7 +77,7 @@ define([
 
                 } );
 
-                // Calls the options.success method and passes an array of objects (Internally saves these objects as models to the current collection)
+                // Calls the options.success method and passes an array of objects (Internally saves these objects as pdca.models to the current collection)
                 options.success( categories );
 
                 // Triggers the custom `added` method (which the Category View listens for)

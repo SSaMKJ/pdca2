@@ -2,37 +2,46 @@ package casebycase;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import pdca.quiz.model.EnKoDataMap;
-import pdca.quiz.model.EnKoQuizVo;
-import pdca.quiz.model.QuizWordVo;
-import pdca.quiz.util.QuizUtil;
+import pdca.models.EnKoDataMap;
+import pdca.models.EnKoQuizVo;
+import pdca.models.QuizWordVo;
+import pdca.services.util.MakeQuizData;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by SSaMKJ on 2015-11-19.
  */
 public class QuizDataTest {
 
-    List<EnKoDataMap> quizDatas = new ArrayList<EnKoDataMap>();
+    private static List<EnKoDataMap> quizDatas = new ArrayList<EnKoDataMap>();
+
     @Test
     public void quizTest(){
-        QuizUtil quizUtil = new QuizUtil();
-        quizUtil.setQuizDatas(quizDatas);
-        List<EnKoQuizVo> retData= quizUtil.getData(10);
+        MakeQuizData makeQuizData = new MakeQuizData(quizDatas);
+        List<EnKoQuizVo> retData= makeQuizData.getQuizList(10);
+        Boolean found = false;
         for (EnKoQuizVo enKoQuizVo : retData) {
+            found = false;
+
             QuizWordVo left = enKoQuizVo.getLeftVo();
-            System.out.println(left);
+            Long leftId = left.getMyid();
             List<QuizWordVo> right = enKoQuizVo.getRightVoList();
             for (QuizWordVo r : right) {
-                System.out.println(r.toString());
+                if(leftId.longValue() == r.getMyid().longValue()){
+                    found = true;
+                    break;
+                }
             }
+            assertTrue(found);
         }
     }
     
     @BeforeClass
-    public void set(){
+    public static void set(){
 
         EnKoDataMap EnKoDataMap = null;
         EnKoDataMap = new EnKoDataMap();

@@ -9,7 +9,7 @@ import pdca.models.EnKoDataMap;
 import pdca.models.EnKoQuizVo;
 import pdca.services.QuizService;
 import pdca.services.util.CheckAnswers;
-import pdca.services.util.QuizUtil;
+import pdca.services.util.MakeQuizData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +39,7 @@ public class QuizServiceImpl implements QuizService
     {
         List<EnKoDataMap> quizDatas = quizMapper.getAll();
 
-        QuizUtil util = new QuizUtil();
-        util.setQuizDatas(quizDatas);
+        MakeQuizData util = new MakeQuizData(quizDatas);
 
         return util.getQuizList(limit);
     }

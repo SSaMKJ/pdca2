@@ -10,12 +10,14 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * Created by SSaMKJ on 2015-11-20.
  */
-public class QuizUtil {
+public class MakeQuizData
+{
     private List<EnKoDataMap> quizDatas;
     private int[] indexArr;
     private int limit = 0;
 
-    public void setQuizDatas(List<EnKoDataMap> quizDatas) {
+    public MakeQuizData(List<EnKoDataMap> quizDatas)
+    {
         this.quizDatas = quizDatas;
         indexArr = new int[quizDatas.size()];
         for (int i = 0; i < quizDatas.size(); i++) {
